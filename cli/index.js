@@ -103,17 +103,16 @@ function stripAnsi(str) {
   return str.replace(/[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g, '');
 }
 
-// Helper: Draw box around content
+// Helper: Draw professional layout around content
 function drawBox(title, lines, color = MAGENTA) {
-  const width = Math.max(60, title.length + 8, ...lines.map(l => stripAnsi(l).length + 4));
-  const borderTop = color + '╭' + '─' + BOLD + ' ' + title + ' ' + RESET + color + '─'.repeat(width - title.length - 4) + '╮' + RESET;
-  const borderBottom = color + '╰' + '─'.repeat(width - 2) + '╯' + RESET;
+  const borderLength = 70;
+  const titlePart = ` ${title} `;
+  const borderTop = color + '╭─' + BOLD + titlePart + RESET + color + '─'.repeat(Math.max(2, borderLength - titlePart.length - 2)) + RESET;
+  const borderBottom = color + '╰' + '─'.repeat(borderLength) + RESET;
   
   console.log(borderTop);
   for (const line of lines) {
-    const rawLen = stripAnsi(line).length;
-    const padding = ' '.repeat(width - rawLen - 4);
-    console.log(color + '│ ' + RESET + line + padding + color + ' │' + RESET);
+    console.log(color + '│ ' + RESET + line);
   }
   console.log(borderBottom);
 }
