@@ -645,6 +645,32 @@ function runLocalDiagnostics(command, exitCode, output) {
       canAutoHeal: true
     };
   }
+  
+  // 4.1 Git SSH permission denied
+  if (output.includes('Permission denied (publickey)') && 
+      (output.includes('git@github.com') || output.includes('git@gitlab.com') || output.includes('Could not read from remote repository'))) {
+    let httpsFix = '';
+    try {
+      const gitRemoteUrl = execSync('git remote get-url origin', { stdio: 'pipe' }).toString().trim();
+      let httpsUrl = gitRemoteUrl;
+      if (httpsUrl.startsWith('git@')) {
+        httpsUrl = httpsUrl.replace(/^git@([^:]+):/, 'https://$1/');
+      } else if (httpsUrl.startsWith('ssh://git@')) {
+        httpsUrl = httpsUrl.replace(/^ssh:\/\/git@([^/]+)\//, 'https://$1/');
+      }
+      if (httpsUrl !== gitRemoteUrl) {
+        httpsFix = `git remote set-url origin ${httpsUrl}`;
+      }
+    } catch (e) {}
+    
+    return {
+      category: 'permission',
+      rootCause: 'Git SSH authentication failed (Permission denied (publickey)).',
+      explanation: 'Your SSH key is not added to your Git provider or your SSH agent is not loaded. Switching the remote URL from SSH (git@...) to HTTPS (https://...) allows you to push using token or credential helper authentication.',
+      suggestedFix: httpsFix || 'ssh-add -l || ssh-add ~/.ssh/id_rsa',
+      canAutoHeal: !!httpsFix
+    };
+  }
 
   // 5. Node engine version mismatch
   if (output.includes('Unsupported engine') || output.includes('requires Node.js')) {

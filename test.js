@@ -398,6 +398,18 @@ runTest('isCommandSafe - blocks destructive rm inside subfolders of system roots
   assert.strictEqual(isCommandSafe('rm -rf *', '/Users/harish/myproject'), true);
 });
 
+runTest('runLocalDiagnostics - Git SSH permission denied', () => {
+  const output = 'git@github.com: Permission denied (publickey).\nfatal: Could not read from remote repository.';
+  const diag = runLocalDiagnostics('git push', 128, output);
+  assert.ok(diag);
+  assert.strictEqual(diag.category, 'permission');
+  if (diag.canAutoHeal) {
+    assert.ok(diag.suggestedFix.includes('git remote set-url origin https://'));
+  } else {
+    assert.strictEqual(diag.suggestedFix, 'ssh-add -l || ssh-add ~/.ssh/id_rsa');
+  }
+});
+
 // --------------------------------------------------
 // Summary Report
 // --------------------------------------------------
