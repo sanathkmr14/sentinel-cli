@@ -76,6 +76,7 @@ heal config --rules "Use strict ESM imports" # Custom instructions appended to t
 | `heal stats` | Displays success rate, total runs, and performance metrics. |
 | `heal install` | Detects shell startup files and hooks self-healing intercepts. |
 | `heal uninstall` | Removes self-healing hook injections from profile scripts. |
+| `heal help` / `--help` / `-h` | Displays the usage instructions and commands list. |
 | `heal version` | Displays the CLI version number. |
 
 ---
