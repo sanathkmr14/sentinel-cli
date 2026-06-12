@@ -1,0 +1,33 @@
+{
+  "name": "self-healing-cli",
+  "version": "1.0.0",
+  "description": "An autonomous self-healing CLI manager that intercepts terminal command failures and automatically diagnoses and patches them using LLMs.",
+  "main": "cli/index.js",
+  "bin": {
+    "heal": "./cli/index.js"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "files": [
+    "cli/index.js",
+    "shell/self-healing.bash",
+    "shell/self-healing.zsh",
+    "shell/self-healing.fish",
+    "shell/self-healing.ps1"
+  ],
+  "keywords": [
+    "self-healing",
+    "cli",
+    "terminal",
+    "assistant",
+    "error-handling",
+    "gemini",
+    "llm",
+    "claude",
+    "autonomous"
+  ],
+  "author": "",
+  "license": "MIT",
+  "preferGlobal": true
+}
