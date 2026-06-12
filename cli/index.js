@@ -672,6 +672,23 @@ function runLocalDiagnostics(command, exitCode, output) {
     };
   }
 
+  // 4.2 Git remote already exists
+  if (output.includes('remote origin already exists') || output.includes('remote already exists')) {
+    const gitMatch = command.match(/git remote add (\S+) (\S+)/);
+    if (gitMatch) {
+      const remoteName = gitMatch[1];
+      const remoteUrl = gitMatch[2];
+      const fixedFix = command.replace(`git remote add ${remoteName} ${remoteUrl}`, `git remote set-url ${remoteName} ${remoteUrl}`);
+      return {
+        category: 'git_conflict',
+        rootCause: `Git remote '${remoteName}' already exists.`,
+        explanation: `You tried to configure the remote '${remoteName}', but it is already configured. We can update its URL to '${remoteUrl}' instead.`,
+        suggestedFix: fixedFix,
+        canAutoHeal: true
+      };
+    }
+  }
+
   // 5. Node engine version mismatch
   if (output.includes('Unsupported engine') || output.includes('requires Node.js')) {
     match = output.match(/requires Node\.js\s*([^\s]+)/) || output.match(/Expected version:\s*([^\s]+)/);

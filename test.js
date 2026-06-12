@@ -410,6 +410,15 @@ runTest('runLocalDiagnostics - Git SSH permission denied', () => {
   }
 });
 
+runTest('runLocalDiagnostics - Git remote already exists', () => {
+  const output = 'fatal: remote origin already exists.';
+  const diag = runLocalDiagnostics('git remote add origin https://github.com/sanathkmr14/sentinel-cli.git && git push -u origin main', 128, output);
+  assert.ok(diag);
+  assert.strictEqual(diag.category, 'git_conflict');
+  assert.strictEqual(diag.suggestedFix, 'git remote set-url origin https://github.com/sanathkmr14/sentinel-cli.git && git push -u origin main');
+  assert.strictEqual(diag.canAutoHeal, true);
+});
+
 // --------------------------------------------------
 // Summary Report
 // --------------------------------------------------
