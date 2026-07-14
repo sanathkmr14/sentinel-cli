@@ -105,6 +105,13 @@ Your tool handles these common issues instantly offline, saving time and API cos
 | **Docker Daemon Offline** | Connect/socket errors | Automatically launches Docker Desktop app or starts system service. |
 | **Permission Denied** | Script execution EACCES | Applies execute permission (`chmod +x <file>`). |
 | **PowerShell Policy** | Script running disabled | Sets policy scope to `RemoteSigned` for the current user. |
+| **Git Stash/Conflicts** | Unstaged changes preventing checkout/pull | Automatically offers to run `git stash` or `git commit -am "WIP"`. |
+| **Missing Sudo** | `Operation not permitted` / `Permission denied` | Prompts to automatically rerun the exact same command prefixed with `sudo`. |
+| **Node Version Mismatch** | `Expected version >= X.Y.Z` on `npm install` | Reads `.nvmrc` or `engines` and automatically runs `nvm use` or `nvm install`. |
+| **Missing Python Venv** | `externally-managed-environment` on `pip` | Offers to create and activate a virtual environment (`python -m venv venv`). |
+| **Storage Full** | `No space left on device` or `ENOSPC` | Suggests safe cleanup commands (e.g. `docker system prune`, `npm cache clean`). |
+| **Lockfile Desync** | `expected yarn.lock to match package.json` | Automatically offers to run `npm install` or `yarn install` to regenerate lockfile. |
+| **File Not Found** | `No such file or directory` (Typo in name) | Uses fuzzy string matching to suggest the correct similarly-named file or folder. |
 
 ---
 
