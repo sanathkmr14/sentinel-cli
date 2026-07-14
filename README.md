@@ -115,6 +115,16 @@ Your tool handles these common issues instantly offline, saving time and API cos
 
 ---
 
+## 🤝 Contributing
+
+We welcome and deeply appreciate contributions from the open-source community! Whether you are fixing bugs, improving documentation, or proposing new features, your efforts help make **sentinel-cli** a better tool for everyone.
+
+To ensure a smooth and collaborative workflow, we recommend opening an issue to discuss significant changes or new feature ideas before submitting a pull request. This helps align your work with the project's roadmap and saves everyone valuable time.
+
+Let's connect and collaborate!
+
+---
+
 ## 📜 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
